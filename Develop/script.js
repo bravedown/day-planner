@@ -17,15 +17,13 @@ function init() {
     // Assign the correct past/present/future classes
     applyTimeClasses();
     // Add event listener to savebuttons
-    
+
     // Fill saved event textboxes
 
 }
 function populateTimeBlocks(arr) {
     // If arr
-    if (arr && initTime.format("D") == plannerData.day) {
-        $(".container").text("true");
-    } else {
+    if (!(arr && initTime.format("D") == plannerData.day) ) {
         plannerData = {
             // Stores day number
             day: initTime.format("D"),
@@ -34,15 +32,14 @@ function populateTimeBlocks(arr) {
             // Array to hold Timeblocks
             timeblocks: []
         };
-        if (plannerData.hour > 17) {
-            var startHour = 17;
-        } else {
-            var startHour = plannerData.hour; 
-        }
-        for (let i = startHour; i < 24; i++) plannerData.timeblocks.push(makeButton(i)); 
-        plannerData.timeblocks.forEach(e => $(".container").append(e) );
-        console.log(plannerData);
     }
+    renderTimeBlocks(plannerData.hour)
+}
+
+function renderTimeBlocks(startHour) {
+    if (startHour > 17) startHour = 17;
+    if (plannerData.timeblocks.length == 0) for (let i = startHour; i < 24; i++) plannerData.timeblocks.push(makeButton(i));
+    plannerData.timeblocks.forEach(e => $(".container").append(e) );
 }
 
 function applyTimeClasses() {
