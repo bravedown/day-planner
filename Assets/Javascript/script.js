@@ -55,7 +55,12 @@ function makeHourRow(hour){
     col1.append(`<label for="${hour}">${hours[hour]}</label>`)
     var col2 = $(`<div class='col-md-10 col-8 time-block' id=${hour}>`);
     col2.append(`<textarea id="${hour}txt" name="${hour}" class="description"></textarea>`)
-    var col3 = $(`<button class='col-md-1 col-2 saveBtn' data-hour='${hour}'></button>`);
+    var col3 = $(`
+    <button class='col-md-1 col-2 saveBtn' data-hour='${hour}'>
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </svg>
+    </button>`);
     newRow.append(col1, col2, col3);
     return newRow;
 }
