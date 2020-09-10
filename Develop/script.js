@@ -14,6 +14,12 @@ function init() {
 
     plannerData = localStorage.getItem("plannerData");
     populateTimeBlocks(plannerData);
+    // Assign the correct past/present/future classes
+    applyTimeClasses();
+    // Add event listener to savebuttons
+    
+    // Fill saved event textboxes
+
 }
 function populateTimeBlocks(arr) {
     // If arr
@@ -24,30 +30,34 @@ function populateTimeBlocks(arr) {
             // Stores day number
             day: initTime.format("D"),
             // Stores hour and AM/PM
-            hour: parseInt(initTime.format("H"))
+            hour: parseInt(initTime.format("H")),
+            // Array to hold Timeblocks
+            timeblocks: []
         };
-        var timeblocks = [];
         if (plannerData.hour > 17) {
-
+            var startHour = 17;
         } else {
-            var startHour = plannerData.hour;
-            for (let i = startHour; i < 24; i++) {
-                timeblocks.push(makeButton(i));
-                
-            }
-            timeblocks.forEach(e => $(".container").append(e) );
+            var startHour = plannerData.hour; 
         }
-
+        for (let i = startHour; i < 24; i++) plannerData.timeblocks.push(makeButton(i)); 
+        plannerData.timeblocks.forEach(e => $(".container").append(e) );
+        console.log(plannerData);
     }
+}
+
+function applyTimeClasses() {
+    for (let i = 0; i < plannerData.hour; i++) $(`#${i}`).addClass("past")
+    $(`#${plannerData.hour}`).addClass("present")
+    for (let i = plannerData.hour + 1; i < 24; i++) $(`#${i}`).addClass("future")
 }
 
 function makeButton(hour){
     var newRow = $("<div class='row' style='height: 80px'>");
-    var col1 = $(`<div class='col-1'>`);
+    var col1 = $(`<div class='col-md-1 col-2 hour'>`);
     col1.append(`<label for="${hour}">${hours[hour]}</label>`)
-    var col2 = $("<div class='col-10'>");
-    col2.append(`<textarea id="${hour}" name="${hour}" style="width: 100%; border: 1px solid black"></textarea>`)
-    var col3 = $("<div class='col-1'>save</div>");
+    var col2 = $(`<div class='col-md-10 col-8 time-block' id=${hour}>`);
+    col2.append(`<textarea id="${hour}txt" name="${hour}" class="description"></textarea>`)
+    var col3 = $("<button class='col-md-1 col-2 saveBtn'></button>");
     newRow.append(col1, col2, col3);
     return newRow;
 }
