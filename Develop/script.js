@@ -32,7 +32,7 @@ function populateTimeBlocks(obj) {
             day: initTime.format("D"),
             // Stores hour and AM/PM
             hour: initHour,
-            // Array to hold Timeblocks
+            // Object to hold Timeblock textarea info later
             rowData: {}
         };
         savePlannerData();
