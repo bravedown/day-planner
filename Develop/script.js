@@ -21,9 +21,10 @@ function init() {
     // Fill saved event textboxes
 
 }
-function populateTimeBlocks(arr) {
-    // If arr
-    if (!(arr && initTime.format("D") == plannerData.day) ) {
+function populateTimeBlocks(obj) {
+    // If obj doesn't exist or the object was created on a previous day
+    if (!obj || initTime.format("D") != obj.day ) {
+        // Create a new plannerData object
         plannerData = {
             // Stores day number
             day: initTime.format("D"),
@@ -32,13 +33,10 @@ function populateTimeBlocks(arr) {
             // Array to hold Timeblocks
             timeblocks: []
         };
+        var startHour = plannerData.hour;
+        if (startHour > 17) startHour = 17;
+        if (plannerData.timeblocks.length == 0) for (let i = startHour; i < 24; i++) plannerData.timeblocks.push(makeButton(i));
     }
-    renderTimeBlocks(plannerData.hour)
-}
-
-function renderTimeBlocks(startHour) {
-    if (startHour > 17) startHour = 17;
-    if (plannerData.timeblocks.length == 0) for (let i = startHour; i < 24; i++) plannerData.timeblocks.push(makeButton(i));
     plannerData.timeblocks.forEach(e => $(".container").append(e) );
 }
 
